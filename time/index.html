@@ -37,8 +37,6 @@
         ? urlParams.get("timeZone")
         : "";
 
-      console.log("format",format);
-
       Date.prototype.pattern = function (fmt) {
         var o = {
           "M+": this.getMonth() + 1, //Month
