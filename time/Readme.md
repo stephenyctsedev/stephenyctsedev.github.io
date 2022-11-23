@@ -1,11 +1,29 @@
+## Example
+`https://stephenyctsedev.github.io/time/?timeZone=Asia/Hong_Kong&format=yyyy-MM-dd%20(w)%20hh:mm:ss%20ampm`
+
 ##Format
->
-
-
-
-
+`?format=yyyy/MM/dd(ww) hh:mm:ss ampm`
+>##### Year (yyyy)
+>##### Month (MM)
+>##### Day (dd)
+>##### Hours (HH/hh) 24Hr & 12hr
+>##### Minutes (mm)
+>##### Seconds (ss)
+>##### AM / PM (ampm)
+>##### Week (w/ww)
+>- w = Mon
+>- ww = Monday
+>##### Japanese Styles Week (j/jj/jjj)
+>- j = 日
+>- jj = 日曜
+>- jjj = 日曜日
+>##### Hong Kong Styles Week (e/ee/eee)
+>- e = 一
+>- ee = 周一
+>- eee = 星期一
 
 ##TimeZone
+`?timeZone=Europe/Andorra`
   >'Europe/Andorra',
   'Asia/Dubai',
   'Asia/Kabul',
