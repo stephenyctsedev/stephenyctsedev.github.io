@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #input-image {
+        width: 200px;
+        height: 200px;
+        display: block;
+        margin: 0 auto;
+      }
+      #converted-image {
+        width: 200px;
+        height: 200px;
+        display: block;
+        margin: 20px auto;
+      }
+      #convert-button {
+        display: block;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="input-image" />
+    <img id="converted-image" />
+    <button id="convert-button">Convert to JPEG</button>
+    <script>
+      const inputImage = document.getElementById("input-image");
+      const convertedImage = document.getElementById("converted-image");
+      const convertButton = document.getElementById("convert-button");
+      
+      convertButton.addEventListener("click", () => {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(inputImage.files[0]);
+        reader.onload = function() {
+          const arrayBuffer = reader.result;
+          const blob = new Blob([arrayBuffer], {type: "image/webp"});
+          
+          const webpUrl = URL.createObjectURL(blob);
+          const image = new Image();
+          image.src = webpUrl;
+          
+          image.onload = function() {
+            const canvas = document.createElement("canvas");
+            canvas.width = image.width;
+            canvas.height = image.height;
+            const context = canvas.getContext("2d");
+            context.drawImage(image, 0, 0);
+            
+            const jpegUrl = canvas.toDataURL("image/jpeg");
+            convertedImage.src = jpegUrl;
+            
+            URL.revokeObjectURL(webpUrl);
+          };
+        };
+      });
+    </script>
+  </body>
+</html>
