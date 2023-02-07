@@ -14,6 +14,10 @@
         display: block;
         margin: 20px auto;
       }
+      #format-select {
+        display: block;
+        margin: 20px auto;
+      }
       #convert-button {
         display: block;
         margin: 20px auto;
@@ -23,10 +27,15 @@
   <body>
     <input type="file" id="input-image" />
     <img id="converted-image" />
-    <button id="convert-button">Convert to JPEG</button>
+    <select id="format-select">
+      <option value="jpeg">JPEG</option>
+      <option value="png">PNG</option>
+    </select>
+    <button id="convert-button">Convert</button>
     <script>
       const inputImage = document.getElementById("input-image");
       const convertedImage = document.getElementById("converted-image");
+      const formatSelect = document.getElementById("format-select");
       const convertButton = document.getElementById("convert-button");
       
       convertButton.addEventListener("click", () => {
@@ -34,11 +43,11 @@
         reader.readAsArrayBuffer(inputImage.files[0]);
         reader.onload = function() {
           const arrayBuffer = reader.result;
-          const blob = new Blob([arrayBuffer], {type: "image/webp"});
+          const blob = new Blob([arrayBuffer]);
           
-          const webpUrl = URL.createObjectURL(blob);
+          const imageUrl = URL.createObjectURL(blob);
           const image = new Image();
-          image.src = webpUrl;
+          image.src = imageUrl;
           
           image.onload = function() {
             const canvas = document.createElement("canvas");
@@ -47,10 +56,12 @@
             const context = canvas.getContext("2d");
             context.drawImage(image, 0, 0);
             
-            const jpegUrl = canvas.toDataURL("image/jpeg");
-            convertedImage.src = jpegUrl;
+            let format = formatSelect.value;
+            let mimeType = "image/" + format;
+            let imageDataUrl = canvas.toDataURL(mimeType);
+            convertedImage.src = imageDataUrl;
             
-            URL.revokeObjectURL(webpUrl);
+            URL.revokeObjectURL(imageUrl);
           };
         };
       });
